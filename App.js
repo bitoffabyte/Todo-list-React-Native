@@ -1,29 +1,52 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+	Button,
+	FlatList,
+	Keyboard,
+	StyleSheet,
+	Text,
+	TouchableWithoutFeedback,
+	View,
+} from 'react-native';
+import Addtodo from './Components/Addtodo';
 import Header from './Components/Header';
 import Todo from './Components/Todo';
 export default function App() {
-	const [todos, updateTodos] = useState([{ text: 'buy battery', key: '1' }]);
+	const [todos, updateTodos] = useState([{ text: 'buy battery', key: '0' }]);
 	const pressHandler = (key) => {
 		updateTodos((prev) => {
 			return prev.filter((todo) => todo.key != key);
 		});
 	};
+	const submitHandler = (text) => {
+		console.log(text);
+		updateTodos((prev) => {
+			return [...prev, { text: text, key: prev.length.toString() }];
+		});
+	};
+
 	return (
-		<View style={styles.container}>
-			<Header />
-			<View style={styles.content}>
-				<View style={styles.list}>
-					<FlatList
-						data={todos}
-						renderItem={({ item }) => (
-							<Todo item={item} pressHandler={pressHandler} />
-						)}
-					/>
+		<TouchableWithoutFeedback
+			onPress={() => {
+				Keyboard.dismiss();
+			}}
+		>
+			<View style={styles.container}>
+				<Header />
+				<View style={styles.content}>
+					<Addtodo adds={submitHandler} />
+					<View style={styles.list}>
+						<FlatList
+							data={todos}
+							renderItem={({ item }) => (
+								<Todo item={item} pressHandler={pressHandler} />
+							)}
+						/>
+					</View>
 				</View>
 			</View>
-		</View>
+		</TouchableWithoutFeedback>
 	);
 }
 
