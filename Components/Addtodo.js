@@ -11,9 +11,18 @@ export default function Addtodo({ adds }) {
 			<TextInput
 				style={styles.input}
 				placeholder='new todo...'
+				value={text}
 				onChangeText={changeHandler}
 			/>
-			<Button title='add todo' color='black' onPress={() => adds(text)} />
+			<Button
+				title='add todo'
+				color='black'
+				onPress={() => {
+					console.log('heeh');
+					updateText('');
+					adds(text);
+				}}
+			/>
 		</View>
 	);
 }

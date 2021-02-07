@@ -42,6 +42,7 @@ export default function App() {
 							renderItem={({ item }) => (
 								<Todo item={item} pressHandler={pressHandler} />
 							)}
+							// style={{ flex: 1 }}
 						/>
 					</View>
 				</View>
